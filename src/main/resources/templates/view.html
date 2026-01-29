@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Магазин</title>
+</head>
+<body>
+
+<h2 th:text="${shop.name}"></h2>
+
+<p><b>Адрес:</b> <span th:text="${shop.address}"></span></p>
+<p><b>Телефон:</b> <span th:text="${shop.phone}"></span></p>
+<p><b>Email:</b> <span th:text="${shop.email}"></span></p>
+<p><b>Сайт:</b> <a th:href="${shop.website}" th:text="${shop.website}"></a></p>
+<p><b>Категория:</b> <span th:text="${shop.category}"></span></p>
+<p><b>Описание:</b></p>
+<p th:text="${shop.description}"></p>
+
+<hr>
+
+<a th:href="@{/shops/{id}/edit(id=${shop.id})}">Редактировать</a> |
+<a th:href="@{/shops}">Назад к списку</a>
+
+</body>
+</html>
