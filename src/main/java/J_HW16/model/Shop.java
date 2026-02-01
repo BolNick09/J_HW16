@@ -1,16 +1,24 @@
 package J_HW16.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "shops")
 public class Shop {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String address;
     private String phone;
     private String email;
     private String website;
     private String category;
-    private String description;
 
+    @Column(columnDefinition = "CLOB")
+    private String description;
 
     public Long getId() {
         return id;

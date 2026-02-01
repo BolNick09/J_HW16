@@ -1,49 +1,44 @@
 package J_HW16.service;
 
 import J_HW16.model.Shop;
+import J_HW16.repository.ShopRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ShopService {
 
-    private final List<Shop> shops = new ArrayList<>();
-    private long nextId = 1;
+    private final ShopRepository repository;
 
-    public List<Shop> findAll() { return shops; }
+    public ShopService(ShopRepository repository) {
+        this.repository = repository;
+    }
+
+    public List<Shop> findAll() {
+        return repository.findAll();
+    }
 
     public Shop findById(Long id) {
-        return shops.stream()
-                .filter(s -> s.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     public void save(Shop shop) {
-        shop.setId(nextId++);
-        shops.add(shop);
+        repository.save(shop);
     }
 
     public void update(Shop shop) {
-        delete(shop.getId());
-        shops.add(shop);
+        repository.save(shop);
     }
 
     public void delete(Long id) {
-        shops.removeIf(s -> s.getId().equals(id));
+        repository.deleteById(id);
     }
 
     public List<Shop> search(String q) {
-        q = q.toLowerCase();
-        String finalQ = q;
-        return shops.stream()
-                .filter(s ->
-                        s.getName().toLowerCase().contains(finalQ) ||
-                                s.getCategory().toLowerCase().contains(finalQ) ||
-                                s.getAddress().toLowerCase().contains(finalQ))
-                .toList();
+        return repository
+                .findByNameContainingIgnoreCaseOrCategoryContainingIgnoreCaseOrAddressContainingIgnoreCase(
+                        q, q, q
+                );
     }
 }
