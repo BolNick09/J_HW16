@@ -1,31 +1,13 @@
 package J_HW16;
 
-import J_HW16.config.AppInitializer;
-import org.apache.catalina.Context;
-import org.apache.catalina.WebResourceRoot;
-import org.apache.catalina.startup.Tomcat;
-import org.apache.catalina.webresources.DirResourceSet;
-import org.apache.catalina.webresources.StandardRoot;
 
-import java.io.File;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class Main
 {
-    public static void main(String[] args) throws Exception {
-        Tomcat tomcat = new Tomcat();
-        tomcat.setPort(8080);
-        tomcat.getConnector();
-
-
-        Context ctx = tomcat.addWebapp("", new File("src/main/webapp").getAbsolutePath());
-
-        // Регистрируем папку target/classes, чтобы Tomcat увидел Initializer
-        WebResourceRoot resources = new StandardRoot(ctx);
-        resources.addPreResources(new DirResourceSet(resources, "/WEB-INF/classes",
-                new File("target/classes").getAbsolutePath(), "/"));
-        ctx.setResources(resources);
-
-        tomcat.start();
-        tomcat.getServer().await();
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
     }
 }

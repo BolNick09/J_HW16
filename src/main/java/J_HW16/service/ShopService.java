@@ -13,9 +13,7 @@ public class ShopService {
     private final List<Shop> shops = new ArrayList<>();
     private long nextId = 1;
 
-    public List<Shop> findAll() {
-        return shops;
-    }
+    public List<Shop> findAll() { return shops; }
 
     public Shop findById(Long id) {
         return shops.stream()
@@ -38,13 +36,14 @@ public class ShopService {
         shops.removeIf(s -> s.getId().equals(id));
     }
 
-    public List<Shop> search(String query) {
-        String q = query.toLowerCase();
+    public List<Shop> search(String q) {
+        q = q.toLowerCase();
+        String finalQ = q;
         return shops.stream()
                 .filter(s ->
-                        s.getName().toLowerCase().contains(q) ||
-                                s.getCategory().toLowerCase().contains(q) ||
-                                s.getAddress().toLowerCase().contains(q))
-                .collect(Collectors.toList());
+                        s.getName().toLowerCase().contains(finalQ) ||
+                                s.getCategory().toLowerCase().contains(finalQ) ||
+                                s.getAddress().toLowerCase().contains(finalQ))
+                .toList();
     }
 }

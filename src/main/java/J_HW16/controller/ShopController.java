@@ -18,7 +18,7 @@ public class ShopController {
 
     @GetMapping
     public String list(
-            @RequestParam(name = "q", required = false) String q,
+            @RequestParam(value = "q", required = false) String q,
             Model model) {
 
         model.addAttribute("shops",
@@ -46,7 +46,7 @@ public class ShopController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable Long id, Model model) {
+    public String edit(@PathVariable Long id, Model model) {
         model.addAttribute("shop", service.findById(id));
         return "form";
     }
